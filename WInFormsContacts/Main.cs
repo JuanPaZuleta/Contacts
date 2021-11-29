@@ -69,6 +69,7 @@ namespace WInFormsContacts
                 Populatecontacts();
             }
         }
+
         private void DeleteContact(int id) {
             _businessLogicLayers.DeleteContact(id);
         }

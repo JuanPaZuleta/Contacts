@@ -27,25 +27,6 @@ namespace WInFormsContacts
         {
             OpenContactDetailsDialog();
         }
-        #endregion
-
-        #region PRIVATE METHODS
-        private void OpenContactDetailsDialog()
-        {
-            ContactDetails contactDetails = new ContactDetails();
-            contactDetails.ShowDialog(this);
-        }
-        #endregion
-
-        private void Main_Load(object sender, EventArgs e)
-        {
-            Populatecontacts();
-        }
-
-        public void Populatecontacts(string searchText = null) { 
-            List<Contact> contacts = _businessLogicLayers.GetContacts(searchText);
-            gridContacts.DataSource = contacts;
-        }
 
         private void gridContacts_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -64,11 +45,41 @@ namespace WInFormsContacts
                 });
                 contactDetails.ShowDialog(this);
             }
-            else if (cell.Value.ToString() == "Delete") {
+            else if (cell.Value.ToString() == "Delete")
+            {
                 DeleteContact(int.Parse(gridContacts.Rows[e.RowIndex].Cells[0].Value.ToString()));
                 Populatecontacts();
             }
         }
+
+        #endregion
+
+        #region PRIVATE METHODS
+        private void OpenContactDetailsDialog()
+        {
+            ContactDetails contactDetails = new ContactDetails();
+            contactDetails.ShowDialog(this);
+        }
+        private void Main_Load(object sender, EventArgs e)
+        {
+            Populatecontacts();
+        }
+        #endregion
+
+
+
+        public void Populatecontacts(string searchText = null) { 
+            List<Contact> contacts = _businessLogicLayers.GetContacts(searchText);
+            gridContacts.DataSource = contacts;
+            if (contacts.Count == 0)
+            {
+                MessageBox.Show("No se encontraron registros.");
+                Populatecontacts("");
+            }
+
+        }
+
+        
 
         private void DeleteContact(int id) {
             _businessLogicLayers.DeleteContact(id);

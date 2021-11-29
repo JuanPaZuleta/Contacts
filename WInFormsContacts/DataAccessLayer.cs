@@ -27,8 +27,6 @@ namespace WInFormsContacts
                 SqlParameter phone = new SqlParameter("@Phone", contact.Phone);
                 SqlParameter address = new SqlParameter("@Address", contact.Address);
 
-
-
                 SqlCommand command = new SqlCommand(query, conn);
                 command.Parameters.Add(firstName);
                 command.Parameters.Add(lastName);
@@ -37,12 +35,9 @@ namespace WInFormsContacts
 
                 command.ExecuteNonQuery();
 
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally {
@@ -76,7 +71,6 @@ namespace WInFormsContacts
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally { 
@@ -94,11 +88,9 @@ namespace WInFormsContacts
                 command.Parameters.Add(new SqlParameter("@Id", id));
 
                 command.ExecuteNonQuery();
-
             }
             catch (Exception)
             {
-
                 throw;
             }finally
             {
@@ -119,7 +111,6 @@ namespace WInFormsContacts
                 if (!string.IsNullOrEmpty(search))
                 {
                     query += @" WHERE FirstName LIKE @search OR LastName LIKE @search OR Phone LIKE @search OR Address LIKE @search ";
-
                     command.Parameters.Add(new SqlParameter("@Search", $"%{search}%"));
 
                 }
@@ -127,7 +118,7 @@ namespace WInFormsContacts
                 command.Connection = conn;
 
                 SqlDataReader reader = command.ExecuteReader();
-
+                
                 while (reader.Read())
                 {
                     contacts.Add(new Contact
